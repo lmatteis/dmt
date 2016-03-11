@@ -11,7 +11,7 @@ var networkAddress = require('network-address')
 var parseTorrent = require('parse-torrent')
 var path = require('path')
 var prettierBytes = require('prettier-bytes')
-var WebTorrent = require('../')
+var WebTorrent = require('webtorrent')
 
 process.title = 'WebTorrent'
 
