@@ -1,0 +1,66 @@
+{
+  "name": "webtorrent-cli",
+  "description": "Streaming torrent client",
+  "version": "0.0.0",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "http://feross.org/"
+  },
+  "bin": {
+    "webtorrent": "./bin/cmd.js"
+  },
+  "browserify": {
+    "transform": [
+      "package-json-versionify"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/feross/webtorrent-cli/issues"
+  },
+  "dependencies": {
+    "clivas": "^0.2.0",
+    "create-torrent": "^3.23.1",
+    "executable": "^3.0.0",
+    "minimist": "^1.2.0",
+    "moment": "^2.12.0",
+    "network-address": "^1.1.0",
+    "parse-torrent": "^5.7.3",
+    "prettier-bytes": "^1.0.3",
+    "webtorrent": "^0.84.1"
+  },
+  "devDependencies": {
+    "cross-spawn-async": "^2.1.9",
+    "standard": "^6.0.8",
+    "tape": "^4.5.1",
+    "webtorrent-fixtures": "^1.2.0",
+    "xtend": "^4.0.1"
+  },
+  "homepage": "https://webtorrent.io",
+  "keywords": [
+    "bittorrent",
+    "bittorrent client",
+    "download",
+    "mad science",
+    "streaming",
+    "torrent",
+    "webrtc",
+    "webrtc data",
+    "webtorrent"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "optionalDependencies": {
+    "airplay-js": "^0.2.3",
+    "chromecasts": "^1.5.3",
+    "nodebmc": "0.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/webtorrent-cli.git"
+  },
+  "scripts": {
+    "test": "standard && tape test.js",
+    "update-authors": "./bin/update-authors.sh"
+  }
+}
