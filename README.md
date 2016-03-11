@@ -7,7 +7,7 @@
 [![NPM Version][webtorrent-cli-ni]][webtorrent-cli-nu]
 [![NPM Downloads][webtorrent-cli-downloads-image]][webtorrent-cli-downloads-url]
 
-<img src="WebTorrent.png" width="100">
+<img src="https://webtorrent.io/img/WebTorrent.png" alt="WebTorrent" width="100">
 
 WebTorrent is the first BitTorrent client that works in the browser, but `webtorrent-cli`,
 i.e. *THIS PACKAGE*, is for using WebTorrent from the command line.
