@@ -466,7 +466,7 @@ var drawInterval
 function drawTorrent (torrent) {
   if (!argv.quiet) {
     process.stdout.write(new Buffer('G1tIG1sySg==', 'base64')) // clear for drawing
-    drawInterval = setInterval(draw, 500)
+    drawInterval = setInterval(draw, 1000)
     unref(drawInterval)
   }
 
