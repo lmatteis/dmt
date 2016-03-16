@@ -10,11 +10,6 @@
   "bin": {
     "webtorrent": "./bin/cmd.js"
   },
-  "browserify": {
-    "transform": [
-      "package-json-versionify"
-    ]
-  },
   "bugs": {
     "url": "https://github.com/feross/webtorrent-cli/issues"
   },
