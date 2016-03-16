@@ -24,7 +24,8 @@ process.on('exit', function (code) {
   clivas.line('{green:OPEN AN ISSUE:} https://github.com/feross/webtorrent/issues\n')
   clivas.line(
     'DEBUG INFO: ' +
-    'webtorrent ' + require('../package.json').version + ', ' +
+    'webtorrent-cli ' + require('../package.json').version + ', ' +
+    'webtorrent ' + require('webtorrent/package.json').version + ', ' +
     'node ' + process.version + ', ' +
     process.platform + ' ' + process.arch + ', ' +
     'exit ' + code
@@ -149,7 +150,10 @@ if (['info', 'create', 'download', 'add', 'seed'].indexOf(command) !== -1 && arg
 }
 
 function runVersion () {
-  console.log(require('../package.json').version)
+  console.log(
+    require('../package.json').version +
+    ' (webtorrent ' + require('webtorrent/package.json').version + ')'
+  )
   process.exit(0)
 }
 
