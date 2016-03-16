@@ -34,17 +34,17 @@ test('Command line: webtorrent version', function (t) {
 
   cp.exec(CMD + ' version', function (err, data) {
     t.error(err)
-    t.equal(data, expectedVersion)
+    t.ok(data.indexOf(expectedVersion))
   })
 
   cp.exec(CMD + ' --version', function (err, data) {
     t.error(err)
-    t.equal(data, expectedVersion)
+    t.ok(data.indexOf(expectedVersion))
   })
 
   cp.exec(CMD + ' -v', function (err, data) {
     t.error(err)
-    t.equal(data, expectedVersion)
+    t.ok(data.indexOf(expectedVersion))
   })
 })
 
