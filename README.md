@@ -1,16 +1,36 @@
-# webtorrent-cli
+<h1 align="center">
+  <br>
+  <a href="https://webtorrent.io"><img src="https://webtorrent.io/img/WebTorrent.png" alt="WebTorrent" width="200"></a>
+  <br>
+  WebTorrent CLI
+  <br>
+  <br>
+</h1>
 
-#### WebTorrent, the streaming torrent client. For the command line.
+<h4 align="center">The streaming torrent client. For the command line.</h4>
 
-[![Gitter][webtorrent-cli-gitter-image]][webtorrent-cli-gitter-url]
-[![Travis Build][webtorrent-cli-ti]][webtorrent-cli-tu]
-[![NPM Version][webtorrent-cli-ni]][webtorrent-cli-nu]
-[![NPM Downloads][webtorrent-cli-downloads-image]][webtorrent-cli-downloads-url]
+<p align="center">
+    <a href="https://gitter.im/feross/webtorrent-cli">
+        <img src="https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg"
+             alt="Gitter">
+    </a>
+    <a href="https://travis-ci.org/feross/webtorrent-cli">
+        <img src="https://img.shields.io/travis/feross/webtorrent-cli/master.svg"
+             alt="Travis Build">
+    </a>
+    <a href="https://npmjs.com/package/webtorrent-cli">
+        <img src="https://img.shields.io/npm/v/webtorrent-cli.svg"
+             alt="NPM Version">
+    </a>
+    <a href="https://npmjs.org/package/webtorrent-cli">
+        <img src="https://img.shields.io/npm/dm/webtorrent-cli.svg"
+             alt="NPM Downloads">
+    </a>
+</p>
+<br>
 
-<img src="https://webtorrent.io/img/WebTorrent.png" alt="WebTorrent" width="100">
-
-WebTorrent is the first BitTorrent client that works in the browser, but `webtorrent-cli`,
-i.e. *THIS PACKAGE*, is for using WebTorrent from the command line.
+**WebTorrent** is the first BitTorrent client that works in the **browser**, but `webtorrent-cli`,
+i.e. *THIS PACKAGE*, is for using WebTorrent from the **command line**.
 
 `webtorrent-cli` is a simple torrent client for use in node.js, as a command line app. It
 uses TCP and UDP to talk to other torrent clients.
@@ -85,16 +105,6 @@ In addition to magnet uris, webtorrent supports many ways to specify a torrent:
 - parsed torrent (from [parse-torrent](https://github.com/feross/parse-torrent))
 - http/https url to a torrent file (string)
 - filesystem path to a torrent file (string)
-
-[webtorrent-cli]: https://github.com/feross/webtorrent-cli
-[webtorrent-cli-gitter-image]: https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg
-[webtorrent-cli-gitter-url]: https://gitter.im/feross/webtorrent-cli
-[webtorrent-cli-ti]: https://img.shields.io/travis/feross/webtorrent-cli/master.svg
-[webtorrent-cli-tu]: https://travis-ci.org/feross/webtorrent-cli
-[webtorrent-cli-ni]: https://img.shields.io/npm/v/webtorrent-cli.svg
-[webtorrent-cli-nu]: https://www.npmjs.com/package/webtorrent-cli
-[webtorrent-cli-downloads-image]: https://img.shields.io/npm/dm/webtorrent-cli.svg
-[webtorrent-cli-downloads-url]: https://npmjs.org/package/webtorrent-cli
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 
