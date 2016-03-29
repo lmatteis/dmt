@@ -56,6 +56,7 @@ var argv = minimist(process.argv.slice(2), {
     'xbmc',
     'stdout',
     'quiet',
+    'keep-seeding',
     'help',
     'version',
     'verbose'
@@ -205,6 +206,7 @@ Options (advanced):
     -b, --blocklist [path]  load blocklist file/http url
     -a, --announce [url]    tracker URL to announce to
     -q, --quiet             don't show UI on stdout
+    --keep-seeding          don't quit when done downloading
     --on-done [script]      run script after torrent download is done
     --on-exit [script]      run script before program exit
     --verbose               show torrent protocol details
@@ -578,7 +580,7 @@ function drawTorrent (torrent) {
 
 function torrentDone () {
   if (argv['on-done']) unref(cp.exec(argv['on-done']))
-  if (!playerName && !serving && argv.out) gracefulExit()
+  if (!playerName && !serving && argv.out && !argv['keep-seeding']) gracefulExit()
 }
 
 function fatalError (err) {
