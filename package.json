@@ -58,5 +58,6 @@
   "scripts": {
     "test": "standard && tape test.js",
     "update-authors": "./bin/update-authors.sh"
-  }
+  },
+  "preferGlobal": true
 }
