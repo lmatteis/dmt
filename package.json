@@ -51,6 +51,7 @@
     "chromecasts": "^1.5.3",
     "nodebmc": "0.0.6"
   },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/feross/webtorrent-cli.git"
@@ -58,6 +59,5 @@
   "scripts": {
     "test": "standard && tape test.js",
     "update-authors": "./bin/update-authors.sh"
-  },
-  "preferGlobal": true
+  }
 }
