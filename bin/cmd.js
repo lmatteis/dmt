@@ -246,6 +246,9 @@ function runInfo (torrentId) {
 }
 
 function runCreate (input) {
+  if (!argv.createdBy) {
+    argv.createdBy = 'WebTorrent <https://webtorrent.io>'
+  }
   createTorrent(input, argv, function (err, torrent) {
     if (err) return errorAndExit(err)
     if (argv.out) {
