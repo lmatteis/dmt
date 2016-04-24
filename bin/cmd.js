@@ -302,7 +302,7 @@ function runDownload (torrentId) {
 
   torrent.on('done', function () {
     if (!argv.quiet) {
-      var numActiveWires = torrent.swarm.wires.reduce(function (num, wire) {
+      var numActiveWires = torrent.wires.reduce(function (num, wire) {
         return num + (wire.downloaded > 0)
       }, 0)
       clivas.line('')
@@ -484,8 +484,12 @@ function drawTorrent (torrent) {
     torrent.on('hotswap', function () {
       hotswaps += 1
     })
+    var blockedPeers = 0
+    torrent.on('blockedPeer', function () {
+      blockedPeers += 1
+    })
 
-    var unchoked = torrent.swarm.wires.filter(function (wire) {
+    var unchoked = torrent.wires.filter(function (wire) {
       return !wire.peerChoking
     })
     var linesRemaining = clivas.height
@@ -523,14 +527,14 @@ function drawTorrent (torrent) {
     )
     if (argv.verbose) {
       line(
-        '{green:Queued peers:} {bold:' + torrent.swarm.numQueued + '}  ' +
-        '{green:Blocked peers:} {bold:' + torrent.numBlockedPeers + '}  ' +
+        '{green:Queued peers:} {bold:' + torrent.numQueued + '}  ' +
+        '{green:Blocked peers:} {bold:' + blockedPeers + '}  ' +
         '{green:Hotswaps:} {bold:' + hotswaps + '}'
       )
     }
     line('')
 
-    torrent.swarm.wires.every(function (wire) {
+    torrent.wires.every(function (wire) {
       var progress = '?'
       if (torrent.length) {
         var bits = 0
