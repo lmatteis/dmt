@@ -11,6 +11,7 @@ var networkAddress = require('network-address')
 var parseTorrent = require('parse-torrent')
 var path = require('path')
 var prettierBytes = require('prettier-bytes')
+var vlcCommand = require('vlc-command')
 var WebTorrent = require('webtorrent')
 
 process.title = 'WebTorrent'
@@ -370,40 +371,22 @@ function runDownload (torrentId) {
     if (argv.stdout) torrent.files[index].createReadStream().pipe(process.stdout)
 
     var cmd
-    if (argv.vlc && process.platform === 'win32') {
-      var Registry = require('winreg')
-
-      var key
-      if (process.arch === 'x64') {
-        key = new Registry({
-          hive: Registry.HKLM,
-          key: '\\Software\\Wow6432Node\\VideoLAN\\VLC'
-        })
-      } else {
-        key = new Registry({
-          hive: Registry.HKLM,
-          key: '\\Software\\VideoLAN\\VLC'
-        })
-      }
-
-      if (key) {
-        key.get('InstallDir', function (err, item) {
-          if (err) return fatalError(err)
-          var vlcPath = item.value + path.sep + 'vlc'
-          VLC_ARGS = VLC_ARGS.split(' ')
-          VLC_ARGS.unshift(href)
-          unref(cp.execFile(vlcPath, VLC_ARGS, function (err) {
+    if (argv.vlc) {
+      vlcCommand(function (err, cmd) {
+        if (err) return fatalError(err)
+        VLC_ARGS = href + ' ' + VLC_ARGS
+        if (process.platform === 'win32') {
+          unref(cp.execFile(cmd, VLC_ARGS, function (err) {
             if (err) return fatalError(err)
             torrentDone()
           }))
-        })
-      }
-    } else if (argv.vlc) {
-      var root = '/Applications/VLC.app/Contents/MacOS/VLC'
-      var home = (process.env.HOME || '') + root
-      cmd = 'vlc ' + href + ' ' + VLC_ARGS + ' || ' +
-        root + ' ' + href + ' ' + VLC_ARGS + ' || ' +
-        home + ' ' + href + ' ' + VLC_ARGS
+        } else {
+          unref(cp.exec(cmd + ' ' + VLC_ARGS, function (err) {
+            if (err) return fatalError(err)
+            torrentDone()
+          }))
+        }
+      })
     } else if (argv.mplayer) {
       cmd = MPLAYER_EXEC + ' ' + href
     } else if (argv.mpv) {
