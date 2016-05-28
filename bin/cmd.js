@@ -376,7 +376,7 @@ function runDownload (torrentId) {
         if (err) return fatalError(err)
         VLC_ARGS = href + ' ' + VLC_ARGS
         if (process.platform === 'win32') {
-          unref(cp.execFile(cmd, VLC_ARGS, function (err) {
+          unref(cp.execFile(cmd, VLC_ARGS.split(/\s+/), function (err) {
             if (err) return fatalError(err)
             torrentDone()
           }))
