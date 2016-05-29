@@ -462,16 +462,17 @@ function drawTorrent (torrent) {
     unref(drawInterval)
   }
 
-  function draw () {
-    var hotswaps = 0
-    torrent.on('hotswap', function () {
-      hotswaps += 1
-    })
-    var blockedPeers = 0
-    torrent.on('blockedPeer', function () {
-      blockedPeers += 1
-    })
+  var hotswaps = 0
+  torrent.on('hotswap', function () {
+    hotswaps += 1
+  })
 
+  var blockedPeers = 0
+  torrent.on('blockedPeer', function () {
+    blockedPeers += 1
+  })
+
+  function draw () {
     var unchoked = torrent.wires.filter(function (wire) {
       return !wire.peerChoking
     })
