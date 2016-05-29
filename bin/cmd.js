@@ -374,14 +374,14 @@ function runDownload (torrentId) {
     if (argv.vlc) {
       vlcCommand(function (err, cmd) {
         if (err) return fatalError(err)
-        VLC_ARGS = href + ' ' + VLC_ARGS
         if (process.platform === 'win32') {
-          unref(cp.execFile(cmd, VLC_ARGS.split(/\s+/), function (err) {
+          var args = [].concat(href, VLC_ARGS.split(' '))
+          unref(cp.execFile(cmd, args, function (err) {
             if (err) return fatalError(err)
             torrentDone()
           }))
         } else {
-          unref(cp.exec(cmd + ' ' + VLC_ARGS, function (err) {
+          unref(cp.exec(cmd + ' ' + href + ' ' + VLC_ARGS, function (err) {
             if (err) return fatalError(err)
             torrentDone()
           }))
