@@ -3,9 +3,9 @@
   "description": "WebTorrent, the streaming torrent client. For the command line.",
   "version": "1.2.2",
   "author": {
-    "name": "Feross Aboukhadijeh",
-    "email": "feross@feross.org",
-    "url": "http://feross.org/"
+    "name": "WebTorrent, LLC",
+    "email": "feross@webtorrent.io",
+    "url": "https://webtorrent.io"
   },
   "bin": {
     "webtorrent": "./bin/cmd.js"
