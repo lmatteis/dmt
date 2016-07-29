@@ -1,113 +1,22 @@
-<h1 align="center">
-  <br>
-  <a href="https://webtorrent.io"><img src="https://webtorrent.io/img/WebTorrent.png" alt="WebTorrent" width="200"></a>
-  <br>
-  WebTorrent CLI
-  <br>
-  <br>
-</h1>
-
-<h4 align="center">The streaming torrent client. For the command line.</h4>
-
-<p align="center">
-    <a href="https://gitter.im/feross/webtorrent-cli">
-        <img src="https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg"
-             alt="Gitter">
-    </a>
-    <a href="https://travis-ci.org/feross/webtorrent-cli">
-        <img src="https://img.shields.io/travis/feross/webtorrent-cli/master.svg"
-             alt="Travis Build">
-    </a>
-    <a href="https://npmjs.com/package/webtorrent-cli">
-        <img src="https://img.shields.io/npm/v/webtorrent-cli.svg"
-             alt="NPM Version">
-    </a>
-    <a href="https://npmjs.org/package/webtorrent-cli">
-        <img src="https://img.shields.io/npm/dm/webtorrent-cli.svg"
-             alt="NPM Downloads">
-    </a>
-</p>
-<br>
-
-**WebTorrent** is the first BitTorrent client that works in the **browser**, but `webtorrent-cli`,
-i.e. *THIS PACKAGE*, is for using WebTorrent from the **command line**.
-
-`webtorrent-cli` is a simple torrent client for use in node.js, as a command line app. It
-uses TCP and UDP to talk to other torrent clients.
-
-**NOTE**: To connect to "web peers" (browsers) in addition to normal BitTorrent peers, use
-[`webtorrent-hybrid`](https://github.com/feross/webtorrent-hybrid) which includes WebRTC
-support for node.
-
-To use WebTorrent in the browser, see [`webtorrent`](https://github.com/feross/webtorrent).
-
-### Features
-
-- **Use [WebTorrent](https://webtorrent.io) from the command line!**
-- **Insanely fast**
-- **Pure Javascript** (no native dependencies)
-- Streaming
-  - Stream to **AirPlay**, **Chromecast**, **VLC player**, and many other devices/players
-  - Fetches pieces from the network on-demand so seeking is supported (even before torrent is finished)
-  - Seamlessly switches between sequential and rarest-first piece selection strategy
-- Supports advanced torrent client features
-  - **magnet uri** support via **[ut_metadata](https://github.com/feross/ut_metadata)**
-  - **peer discovery** via **[dht](https://github.com/feross/bittorrent-dht)**,
-    **[tracker](https://github.com/feross/bittorrent-tracker)**, and
-    **[ut_pex](https://github.com/fisch0920/ut_pex)**
-  - **[protocol extension api](https://github.com/feross/bittorrent-protocol#extension-api)**
-    for adding new extensions
+This is a reference implementation for the Decentralized Mutable Torrents extension proposed here: https://github.com/bittorrent/bittorrent.org/issues/34
 
 ### Install
 
-To install a `webtorrent` command line program, run:
-
 ```bash
-npm install webtorrent-cli -g
+npm install
 ```
 
 ### Usage
 
 ```bash
-$ webtorrent --help
+$ ./bin/cmd.js --help
+
+- mutable torrents commands:
+  keypair                                         Create new public-private keypair
+  publish <public-key> <private-key> <info-hash>  Publish new torrent
+  consume <public-key>                            Downloads mutable torrent
 ```
-
-To download a torrent:
-
-```bash
-$ webtorrent magnet_uri
-```
-
-To stream a torrent to a device like **AirPlay** or **Chromecast**, just pass a flag:
-
-```bash
-$ webtorrent magnet_uri --airplay
-```
-
-There are many supported streaming options:
-
-```bash
---airplay               Apple TV
---chromecast            Chromecast
---mplayer               MPlayer
---mpv                   MPV
---omx [jack]            omx [default: hdmi]
---vlc                   VLC
---xbmc                  XBMC
---stdout                standard out [implies --quiet]
-```
-
-In addition to magnet uris, webtorrent supports many ways to specify a torrent:
-
-- magnet uri (string)
-- torrent file (buffer)
-- info hash (hex string or buffer)
-- parsed torrent (from [parse-torrent](https://github.com/feross/parse-torrent))
-- http/https url to a torrent file (string)
-- filesystem path to a torrent file (string)
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 
 ### License
 
-MIT. Copyright (c) [WebTorrent, LLC](https://webtorrent.io).
+MIT.
