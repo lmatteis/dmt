@@ -1,4 +1,6 @@
-This is a reference implementation for the Decentralized Mutable Torrents extension proposed here: https://github.com/bittorrent/bittorrent.org/issues/34
+This is a reference implementation for the Decentralized Mutable Torrents extension proposed here: https://github.com/lmatteis/bittorrent.org/blob/master/html/beps/bep_0046.rst
+
+Follow discussion about this BEP here: https://github.com/bittorrent/bittorrent.org/issues/34
 
 ### Install
 
