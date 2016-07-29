@@ -10,9 +10,12 @@ var moment = require('moment')
 var networkAddress = require('network-address')
 var parseTorrent = require('parse-torrent')
 var path = require('path')
+var crypto = require('crypto')
 var prettierBytes = require('prettier-bytes')
 var vlcCommand = require('vlc-command')
 var WebTorrent = require('webtorrent')
+
+var ed = require('ed25519-supercop')
 
 process.title = 'WebTorrent'
 
@@ -144,6 +147,12 @@ if (['info', 'create', 'download', 'add', 'seed'].indexOf(command) !== -1 && arg
   runDownload(/* torrentId */ argv._[1])
 } else if (command === 'seed') {
   runSeed(/* input */ argv._[1])
+} else if (command === 'keypair') {
+  runKeyPair()
+} else if (command === 'publish') {
+  runPublish(/* pubkey */ argv._[1], /* privkey */ argv._[2], /* info-hash */ argv._[3])
+} else if (command === 'consume') {
+  runConsume(/* pubkey */ argv._[1])
 } else if (command) {
   // assume command is "download" when not specified
   runDownload(/* torrentId */ command)
@@ -179,6 +188,11 @@ Commands:
     seed <file/folder>      Seed a file or folder
     create <file>           Create a .torrent file
     info <torrent-id>       Show info for a .torrent file or magnet uri
+
+  - mutable torrents commands:
+    keypair                                         Create new public-private keypair
+    publish <public-key> <private-key> <info-hash>  Publish new torrent
+    consume <public-key>                            Downloads mutable torrent
 
 Specify <torrent-id> as one of:
     * magnet uri
@@ -452,6 +466,63 @@ function runSeed (input) {
     if (argv.quiet) console.log(torrent.magnetURI)
     drawTorrent(torrent)
   })
+}
+
+function runKeyPair () {
+  var keypair = ed.createKeyPair(ed.createSeed())
+  clivas.line('public key: ' + '{green:' + keypair.publicKey.toString('hex') + '}')
+  clivas.line('secret key: ' + '{red:' + keypair.secretKey.toString('hex') + '}')
+}
+
+function runPublish (publicKey, secretKey, infoHash) {
+  var buffPubKey = Buffer(publicKey, 'hex')
+  var buffSecKey = Buffer(secretKey, 'hex')
+  var targetID = crypto.createHash('sha1').update(buffPubKey).digest('hex') // XXX missing salt
+
+  client = new WebTorrent({ blocklist: argv.blocklist, verify: ed.verify })
+  client.on('error', fatalError)
+
+  var dht = client.dht
+
+  clivas.write('connecting to DHT... ')
+  dht.on('ready', function () {
+    clivas.line('{green:done}')
+
+    var opts = {
+      k: buffPubKey,
+      //seq: 0,
+      v: new Buffer(infoHash, 'hex'),
+      sign: function (buf) {
+        return ed.sign(buf, buffPubKey, buffSecKey)
+      }
+    }
+
+    clivas.write('looking up target ID ' + targetID + ' which is hash of public key ... ')
+    dht.get(targetID, function (err, res) {
+      if (err || !res) {
+        clivas.line('{red:not found}')
+        publishSeq(0)
+      } else {
+        clivas.line('{green:done}')
+        console.log(res)
+      }
+      function publishSeq(seq) {
+        opts.seq = seq
+        clivas.write('publishing infohash ' + infoHash + ' to ' + targetID + ' with seq '+seq+' ... ')
+        dht.put(opts, function (err, hash) {
+          if (err) return clivas.line('{red:error publishing}')
+          if (hash) clivas.line('{green:done}')
+        })
+
+      }
+    })
+
+
+  })
+
+}
+
+function runConsume () {
 }
 
 var drawInterval

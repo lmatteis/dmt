@@ -16,6 +16,7 @@
   "dependencies": {
     "clivas": "^0.2.0",
     "create-torrent": "^3.23.1",
+    "ed25519-supercop": "^1.0.2",
     "executable": "^3.0.0",
     "minimist": "^1.2.0",
     "moment": "^2.12.0",
