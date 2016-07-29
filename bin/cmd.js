@@ -515,7 +515,7 @@ function runPublish (publicKey, secretKey, infoHash) {
         dht.put(opts, function (err, hash) {
           if (err) clivas.line('{red:error publishing}')
           if (hash) clivas.line('{green:done}')
-          client.destroy();
+          client.destroy()
         })
 
       }
@@ -526,7 +526,34 @@ function runPublish (publicKey, secretKey, infoHash) {
 
 }
 
-function runConsume () {
+function runConsume (publicKey) {
+  var buffPubKey = Buffer(publicKey, 'hex')
+  var targetID = crypto.createHash('sha1').update(buffPubKey).digest('hex') // XXX missing salt
+
+  client = new WebTorrent({ dht: {verify: ed.verify }})
+  client.on('error', fatalError)
+
+  var dht = client.dht
+
+  clivas.write('connecting to DHT... ')
+  dht.on('ready', function () {
+    clivas.line('{green:done}')
+
+    clivas.write('looking up target ID ' + targetID + ' ... ')
+
+    dht.get(targetID, function (err, res) {
+      if (err || !res) {
+        clivas.line('{red:not found}')
+        client.destroy();
+      } else {
+        clivas.line('{green:done}')
+        clivas.line('response value: {grey:' + res.v.toString('hex') +'}')
+
+        runDownload(res.v)
+      }
+    })
+
+  })
 }
 
 var drawInterval
