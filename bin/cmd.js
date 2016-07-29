@@ -11,6 +11,7 @@ var networkAddress = require('network-address')
 var parseTorrent = require('parse-torrent')
 var path = require('path')
 var crypto = require('crypto')
+var bencode = require('bencode')
 var prettierBytes = require('prettier-bytes')
 var vlcCommand = require('vlc-command')
 var WebTorrent = require('webtorrent')
@@ -479,7 +480,7 @@ function runPublish (publicKey, secretKey, infoHash) {
   var buffSecKey = Buffer(secretKey, 'hex')
   var targetID = crypto.createHash('sha1').update(buffPubKey).digest('hex') // XXX missing salt
 
-  client = new WebTorrent({ blocklist: argv.blocklist, verify: ed.verify })
+  client = new WebTorrent({ dht: {verify: ed.verify }})
   client.on('error', fatalError)
 
   var dht = client.dht
@@ -497,21 +498,24 @@ function runPublish (publicKey, secretKey, infoHash) {
       }
     }
 
-    clivas.write('looking up target ID ' + targetID + ' which is hash of public key ... ')
+    clivas.write('looking up target ID ' + targetID + ' ... ')
     dht.get(targetID, function (err, res) {
       if (err || !res) {
         clivas.line('{red:not found}')
         publishSeq(0)
       } else {
         clivas.line('{green:done}')
-        console.log(res)
+        publishSeq(res.seq + 1)
       }
       function publishSeq(seq) {
         opts.seq = seq
-        clivas.write('publishing infohash ' + infoHash + ' to ' + targetID + ' with seq '+seq+' ... ')
+        clivas.line('making request:')
+        console.log(opts)
+        clivas.write('... ')
         dht.put(opts, function (err, hash) {
-          if (err) return clivas.line('{red:error publishing}')
+          if (err) clivas.line('{red:error publishing}')
           if (hash) clivas.line('{green:done}')
+          client.destroy();
         })
 
       }
