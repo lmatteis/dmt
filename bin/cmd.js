@@ -548,8 +548,9 @@ function runConsume (publicKey) {
       } else {
         clivas.line('{green:done}')
         clivas.line('response value: {grey:' + res.v.toString('hex') +'}')
+        client.destroy();
 
-        runDownload(res.v)
+        //runDownload(res.v)
       }
     })
 
