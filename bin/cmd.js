@@ -492,7 +492,9 @@ function runPublish (publicKey, secretKey, infoHash) {
     var opts = {
       k: buffPubKey,
       //seq: 0,
-      v: new Buffer(infoHash, 'hex'),
+      v: {
+        ih: new Buffer(infoHash, 'hex')
+      },
       sign: function (buf) {
         return ed.sign(buf, buffPubKey, buffSecKey)
       }
@@ -547,7 +549,9 @@ function runConsume (publicKey) {
         client.destroy();
       } else {
         clivas.line('{green:done}')
-        clivas.line('response value: {grey:' + res.v.toString('hex') +'}')
+        console.log('response:')
+        console.log(res)
+        // clivas.line('response value: {grey:' + res.v.toString('hex') +'}')
         client.destroy();
 
         //runDownload(res.v)
